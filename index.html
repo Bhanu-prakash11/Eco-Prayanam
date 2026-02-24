@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eco Prayanam</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+  <body>
+
+  <!-- Title -->
+  <section id="title" class="active">
+    <h1>
+      <img src="images/pic-01.png" alt="Eco Icon" style="width: 60px; height: 60px;" />
+      Eco Prayanam
+    </h1>
+    <p>The Journey to the Green Recommend</p>
+    <button onclick="nextSection('login')">Get Started</button>
+  </section>
+
+  <!-- Helpline -->
+  <div class="helpdesk" id="helpdesk">
+    <div class="help-column" id="help-left"></div>
+    <div class="help-column" id="help-right"></div>
+  </div>
+
+  <!-- Login -->
+  <section id="login">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <button onclick="nextSection('signup')">Signup</button></p>
+    <button class="back-btn" onclick="nextSection('title')">⬅ Back</button>
+  </section>
+
+  <!-- Signup -->
+  <section id="signup">
+    <h2>Signup</h2>
+    <input type="text" id="newUser" placeholder="Username"><br>
+    <input type="password" id="newPass" placeholder="Password"><br>
+    <button onclick="signup()">Signup</button>
+    <button class="back-btn" onclick="nextSection('login')">⬅ Back</button>
+  </section>
+
+  <!-- Location -->
+  <section id="location">
+    <h2>Enter Your Trip</h2>
+    <div class="location-box">
+      <input id="pickupSearch" placeholder="Enter Pickup Place" list="placesList" autocomplete="off" />
+      <img src="images/pic3.png" alt="Swap" onclick="swapLocations()" />
+      <input id="dropSearch" placeholder="Enter Drop Place" list="placesList" autocomplete="off" />
+      <datalist id="placesList">
+        <option value="Banjara Hills">
+        <option value="Gachibowli">
+        <option value="Madhapur">
+        <option value="Hitech City">
+        <option value="Kukatpally">
+        <option value="Secunderabad">
+        <option value="Begumpet">
+        <option value="Ameerpet">
+        <option value="Dilsukhnagar">
+        <option value="Jubilee Hills">
+        <option value="LB Nagar">
+        <option value="MG Road">
+        <option value="Mehdipatnam">
+        <option value="Tolichowki">
+        <option value="Hyderguda">
+      </datalist>
+    </div>
+    <button onclick="validateLocationAndNext()">Next</button>
+    <button class="back-btn" onclick="nextSection('login')">⬅ Back</button>
+  </section>
+
+  <!-- Updated Transport Section -->
+<section id="transport">
+  <h2>Select Transport Mode</h2>
+  
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:2rem; margin-top:20px;">
+    <div style="flex:1; min-width:250px; text-align:center; background:#fff; border-radius:12px; padding:2rem; box-shadow:0 4px 8px rgba(0,0,0,0.2)">
+      <button onclick="showBus()" style="width:100%; padding:1rem; font-size:1.2rem;">🚍 Bus</button>
+      <p style="margin-top:1rem;">Check all bus timings, types (Diesel/Electric), and live status.</p>
+    </div>
+
+    <div style="flex:1; min-width:250px; text-align:center; background:#fff; border-radius:12px; padding:2rem; box-shadow:0 4px 8px rgba(0,0,0,0.2)">
+      <button onclick="showRide()" style="width:100%; padding:1rem; font-size:1.2rem;">🚖 Ride Hailing</button>
+      <p style="margin-top:1rem;">Compare different ride options with price and CO₂ emission.</p>
+    </div>
+  </div>
+
+  <br/>
+  <button onclick="nextSection('recommend')">🌍 Recommendation</button>
+  <button class="back-btn" onclick="nextSection('location')">⬅ Back</button>
+</section>
+
+
+<!-- Updated Bus Section -->
+<section id="bus">
+  <h2>Bus Timings & Info</h2>
+
+  <!-- Bus Color Legend -->
+  <div style="margin-bottom:20px; background:#e8f5e9; padding:15px; border-radius:8px; max-width:700px; margin-left:auto; margin-right:auto;">
+    <h3>Bus Box Color Info:</h3>
+    <div style="display:flex; justify-content:space-around; flex-wrap:wrap; gap:15px;">
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div style="width:40px; height:40px; background:#6c757d; border-radius:6px; margin-bottom:5px;"></div>
+        <span>Ash - Completed Bus</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div style="width:40px; height:40px; background:#fd7e14; border-radius:6px; margin-bottom:5px;"></div>
+        <span>Orange - Current Bus</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div style="width:40px; height:40px; background:white; border:2px solid green; border-radius:6px; margin-bottom:5px;"></div>
+        <span>White - Upcoming Bus</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div style="width:40px; height:40px; background:#198754; border-radius:6px; margin-bottom:5px;"></div>
+        <span>Green - Electric Bus</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bus Boxes -->
+  <div class="bus-container" id="busList"></div>
+
+  <!-- Bus Details -->
+  <div id="bus-details">
+    <h3>Bus Details</h3>
+    <div class="detail-item"><strong>Time:</strong> <span id="d-time"></span></div>
+    <div class="detail-item"><strong>Type:</strong> <span id="d-type"></span></div>
+    <div class="detail-item"><strong>Strength:</strong> <span id="d-strength"></span></div>
+    <div class="detail-item"><strong>CO₂ Emission:</strong> <span id="d-co2"></span></div>
+    <div class="detail-item"><strong>Status:</strong> <span id="d-status"></span></div>
+    <button onclick="closeDetails()">Close</button>
+  </div>
+
+  <button class="back-btn" onclick="nextSection('transport')">⬅ Back</button>
+</section>
+
+
+ <!-- Ride -->
+<section id="ride">
+  <h2>Ride-Hailing Platforms</h2>
+  <div id="rideList" style="display:flex; flex-direction:column; gap:1.5rem; width:100%; max-width:800px;"></div>
+  <button class="back-btn" onclick="nextSection('transport')">⬅ Back</button>
+</section>
+
+
+  <!-- Recommendation -->
+<section id="recommend">
+  <h2>🌍 Eco Recommendation</h2>
+  <div id="recommendation" style="display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center;"></div>
+
+  <br/>
+  <button onclick="showComparison()">🔎 View All Options</button>
+  <button onclick="nextSection('title')">Start Again</button>
+  <button class="back-btn" onclick="nextSection('transport')">⬅ Back</button>
+
+  <!-- Hidden Comparison Table -->
+  <div id="comparison" style="margin-top:2rem; display:none;">
+    <h3>📊 Compare All Options</h3>
+    <table border="1" cellpadding="10" cellspacing="0" style="width:100%; max-width:900px; margin:auto; border-collapse:collapse; text-align:center;">
+      <thead style="background:#2d6a4f; color:white;">
+        <tr>
+          <th>Mode</th>
+          <th>Time</th>
+          <th>Price (₹)</th>
+          <th>CO₂ (kg)</th>
+          <th>Duration (min)</th>
+        </tr>
+      </thead>
+      <tbody id="compareBody"></tbody>
+    </table>
+  </div>
+</section>
+
+  <script src="script.js"></script>
+</body>
+</html>
